@@ -24,3 +24,9 @@ resource "aws_iam_role" "mysql_role" {
     local.common_tags
   )
 }
+
+resource "aws_iam_policy" "mysql" {
+  name       = local.mysql_policy_name
+  description = "Policy for MySQL access from EC2 Instance"
+  policy = file("mysql-iam-policy.json")
+}
