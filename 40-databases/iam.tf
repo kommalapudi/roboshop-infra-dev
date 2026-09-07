@@ -1,4 +1,4 @@
-resource "aws_iam_role" "mysql_role" {
+resource "aws_iam_role" "mysql" {
   name = local.mysql_role_name # Robospop-Dev-Mysql
 
   # Terraform's "jsonencode" function converts a
@@ -29,4 +29,9 @@ resource "aws_iam_policy" "mysql" {
   name       = local.mysql_policy_name
   description = "Policy for MySQL access from EC2 Instance"
   policy = file("mysql-iam-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "mysql" {
+  role       = aws_iam_role.mysql.name
+  policy_arn = aws_iam_policy.mysql.arn
 }
