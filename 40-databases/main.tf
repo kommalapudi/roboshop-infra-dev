@@ -128,7 +128,6 @@ resource "aws_instance" "rabbitmq" {
   instance_type = "t3.micro"
   subnet_id     = local.database_subnet_id
   vpc_security_group_ids = [local.rabbitmq_sg_id]
-  iam_instance_profile = aws_iam_instance_profile.rabbitmq.name
 
   tags = merge(local.common_tags, {
     Name = "${var.project}-${var.environment}-rabbitmq"
@@ -157,7 +156,7 @@ resource "terraform_data" "rabbitmq" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh rabbitmq ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh rabbitmq dev"
     ]
   }
 }
